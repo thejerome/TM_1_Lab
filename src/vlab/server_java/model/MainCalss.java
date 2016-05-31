@@ -1,8 +1,5 @@
-package vlab.model;
+package vlab.server_java.model;
 
-import sun.awt.motif.X11CNS11643;
-
-import static java.lang.Math.pow;
 import static java.lang.Math.sin;
 import static java.lang.Math.sqrt;
 

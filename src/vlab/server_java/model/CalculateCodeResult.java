@@ -1,12 +1,15 @@
-package vlab.model;
+package vlab.server_java.model;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import vlab.server_java.model.util.HtmlParamEscaper;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static java.math.BigDecimal.ROUND_HALF_UP;
+import static vlab.server_java.model.util.HtmlParamEscaper.shrink;
 
 /**
  * Created by efimchick on 19.04.16.
@@ -42,9 +45,9 @@ public class CalculateCodeResult {
 
         @JsonCreator
         public Row(BigDecimal[] values) {
-            this.t = values[0];
-            this.phi = values[1];
-            this.omega = values[2];
+            this.t = shrink(values[0]);
+            this.phi = shrink(values[1]);
+            this.omega = shrink(values[2]);
         }
 
         public BigDecimal[] getRow() {

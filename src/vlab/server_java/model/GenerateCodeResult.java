@@ -1,10 +1,12 @@
-package vlab.model;
+package vlab.server_java.model;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.math.BigDecimal;
 import java.util.Objects;
+
+import static vlab.server_java.model.util.HtmlParamEscaper.shrink;
 
 /**
  * Created by efimchick on 19.04.16.
@@ -25,7 +27,7 @@ public class GenerateCodeResult {
         }
 
         this.radiusBounds = radius_bounds;
-        this.mass = mass;
+        this.mass = shrink(mass);
     }
 
     @JsonProperty("radius_bounds")

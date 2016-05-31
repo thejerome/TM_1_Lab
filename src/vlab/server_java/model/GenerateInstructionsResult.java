@@ -1,10 +1,12 @@
-package vlab.model;
+package vlab.server_java.model;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.math.BigDecimal;
 import java.util.Objects;
+
+import static vlab.server_java.model.util.HtmlParamEscaper.shrink;
 
 /**
  * Created by efimchick on 26.04.16.
@@ -19,8 +21,8 @@ public class GenerateInstructionsResult {
             @JsonProperty("v") BigDecimal v) {
         Objects.requireNonNull(i);
         Objects.requireNonNull(v);
-        this.i = i;
-        this.v = v;
+        this.i = shrink(i);
+        this.v = shrink(v);
     }
 
     public BigDecimal getI() {

@@ -1,14 +1,7 @@
-package vlab.model;
+package vlab.server_java.model;
 
-import java.awt.Component;
 import java.awt.*;
-import java.awt.event.*;
-import java.awt.image.*;
 import java.awt.geom.*;
-import java.awt.geom.Area.*;
-import java.awt.Graphics.*;
-import java.lang.Math.*;
-import java.lang.Object.*;
 import java.math.BigDecimal;
 
 class Ustanovka{

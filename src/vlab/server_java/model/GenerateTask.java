@@ -1,10 +1,12 @@
-package vlab.model;
+package vlab.server_java.model;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.math.BigDecimal;
 import java.util.Objects;
+
+import static vlab.server_java.model.util.HtmlParamEscaper.shrink;
 
 /**
  * Created by efimchick on 26.04.16.
@@ -19,8 +21,8 @@ public class GenerateTask {
             @JsonProperty("time") BigDecimal time) {
         Objects.requireNonNull(radius);
         Objects.requireNonNull(time);
-        this.radius = radius;
-        this.time = time;
+        this.radius = shrink(radius);
+        this.time = shrink(time);
     }
 
     public BigDecimal getRadius() {

@@ -1,10 +1,12 @@
-package vlab.model;
+package vlab.server_java.model;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.math.BigDecimal;
 import java.util.List;
+
+import static vlab.server_java.model.util.HtmlParamEscaper.shrink;
 
 /**
  * Created by efimchick on 19.04.16.
@@ -43,8 +45,8 @@ public class CheckTask {
             @JsonProperty("i") BigDecimal i,
             @JsonProperty("v") BigDecimal v) {
         this.table = table;
-        this.i = i;
-        this.v = v;
+        this.i = shrink(i);
+        this.v = shrink(v);
     }
 
     public List<Row> getTable() {
@@ -75,12 +77,12 @@ public class CheckTask {
                 @JsonProperty("t2") BigDecimal t2,
                 @JsonProperty("phi2") BigDecimal phi2,
                 @JsonProperty("S") BigDecimal s) {
-            this.r = r;
-            this.t1 = t1;
-            this.phi1 = phi1;
-            this.t2 = t2;
-            this.phi2 = phi2;
-            this.s = s;
+            this.r = shrink(r);
+            this.t1 = shrink(t1);
+            this.phi1 = shrink(phi1);
+            this.t2 = shrink(t2);
+            this.phi2 = shrink(phi2);
+            this.s = shrink(s);
         }
 
         public BigDecimal getR() {

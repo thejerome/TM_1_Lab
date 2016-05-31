@@ -1,4 +1,4 @@
-package vlab.model;
+package vlab.server_java.model;
 
 /**
  * Created by efimchick on 19.04.16.
@@ -6,9 +6,12 @@ package vlab.model;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import vlab.server_java.model.util.HtmlParamEscaper;
 
 import java.math.BigDecimal;
 import java.util.Objects;
+
+import static vlab.server_java.model.util.HtmlParamEscaper.shrink;
 
 /**
  *
@@ -25,18 +28,21 @@ public class CalculateTask {
 
     @JsonCreator
     public CalculateTask(
-            @JsonProperty("radius") BigDecimal radius,
-            @JsonProperty("time") BigDecimal time) {
+            @JsonProperty("r") BigDecimal radius,
+            @JsonProperty("t") BigDecimal time) {
         Objects.requireNonNull(radius);
         Objects.requireNonNull(time);
-        this.radius = radius;
-        this.time = time;
+        this.radius = shrink(radius);
+        this.time = shrink(time);
+
     }
 
+    @JsonProperty("r")
     public BigDecimal getRadius() {
         return radius;
     }
 
+    @JsonProperty("t")
     public BigDecimal getTime() {
         return time;
     }

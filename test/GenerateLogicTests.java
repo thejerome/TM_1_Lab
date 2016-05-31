@@ -9,9 +9,12 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import rlcp.generate.GeneratingResult;
 import rlcp.server.processor.factory.ProcessorFactory;
 import rlcp.server.processor.generate.GenerateProcessor;
-import vlab.model.CheckTask;
-import vlab.model.CheckTask.Row;
-import vlab.model.GenerateCodeResult;
+import vlab.server_java.model.CalculateTask;
+import vlab.server_java.model.CheckTask;
+import vlab.server_java.model.CheckTask.Row;
+import vlab.server_java.model.GenerateCodeResult;
+import vlab.server_java.model.GenerateInstructionsResult;
+import vlab.server_java.model.util.HtmlParamEscaper;
 
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -22,6 +25,8 @@ import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.IsEqual.equalTo;
 import static org.hamcrest.core.IsNot.not;
 import static org.junit.Assert.*;
+import static vlab.server_java.model.util.HtmlParamEscaper.*;
+import static vlab.server_java.model.util.HtmlParamEscaper.prepareInputJsonString;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("classpath:test-*-server-config.xml")
@@ -76,6 +81,18 @@ public class GenerateLogicTests {
         }
 
 
+    }
+
+    @Test
+    public void realLifeParsingGeneratingResult() throws IOException {
+        ObjectMapper objectMapper = new ObjectMapper();
+        String code = prepareInputJsonString("{&quot;radius_bounds&quot;:[3,3],&quot;mass&quot;:1}");
+        String inst = prepareInputJsonString("{&quot;i&quot;:0.3,&quot;v&quot;:0.1}");
+        GenerateCodeResult c = objectMapper.readValue(code, GenerateCodeResult.class);
+        GenerateInstructionsResult i = objectMapper.readValue(inst, GenerateInstructionsResult.class);
+
+        assertNotNull(c);
+        assertNotNull(i);
     }
 
 
