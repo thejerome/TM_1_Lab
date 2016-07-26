@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE ConfigServer SYSTEM "rsc/ConfigServer.dtd">
 <ConfigServer>
-	<Name value ="LabMelnikov1"/>
+	<Name value ="Lab_damped_oscillations"/>
 	<Port value="14101"/>
 	<UserInfo login="dlc" password="dlc"/>
 </ConfigServer>
