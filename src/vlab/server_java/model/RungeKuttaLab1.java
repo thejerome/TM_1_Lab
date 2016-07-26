@@ -18,7 +18,7 @@ public class RungeKuttaLab1 {
     public CalculateCodeResult calculate(CalculateTask task, GenerateCodeResult variantCode, GenerateInstructionsResult variantInstr) {
 
         final double g = 9.81;
-        final double timeStep = 0.01;
+        final double timeStep = 0.02;
         final double timeLimit = task.getTime().doubleValue();
 
         final double m = variantCode.getMass().doubleValue();//1;
