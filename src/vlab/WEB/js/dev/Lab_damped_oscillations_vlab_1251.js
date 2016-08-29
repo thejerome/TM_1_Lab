@@ -38,12 +38,12 @@ function init_lab() {
     var clock_timeout;
     var window = '<div class="vlab_setting"><div class="block_title"><div class="vlab_name">Виртуальная лаборатория «Затухающие колебания»' +
         '</div><input class="btn_help btn" type="button" value="Справка"/></div><div class="block_pendulum">' +
-        '<canvas width="350px" height="300px" class="pendulum_canvas">Извините, этот браузер не поддерживает canvas</canvas>' +
+        '<canvas width="350px" height="300px" class="pendulum_canvas">браузер не поддерживает canvas</canvas>' +
         '<div class="pendulum_graphics"><div class="waiting_loading"></div></div><div class="pendulum_clock">00:<span class="clock_seconds"></span>' +
         '</div></div><div class="block_control"><div class="pendulum_cargo_weight"></div>' +
         '<label for="control_radius">Радиус <i>r</i></label><input class="control_radius" id="control_radius" type="range" ' +
         'step="0.1" /><div class="control_radius_value"></div><label for="control_duration">' +
-        'Продолжительность эксперимента <i>S</i></label><input class="control_duration" id="control_duration" type="range" max="59" min="1" step="1"/>' +
+        'Продолжительность эксперимента <i>S</i></label><input class="control_duration" id="control_duration" type="range" max="30" min="1" step="1"/>' +
         '<div class="control_duration_value"></div><input class="control_launch btn" type="button" value="Запустить"/>' +
         '<input class="control_stop btn" type="button" value="Стоп"/>' +
         '</div><div class="block_user_table"><table><caption class="user_table_name">Таблица экспериментов</caption>' +
@@ -63,9 +63,9 @@ function init_lab() {
         '<button class="show_graphic_angle btn" type="button">График &#966;(<i>t</i>)</button>' +
         '<button class="show_graphic_speed btn" type="button">График &#631;(<i>t</i>)</button>' +
         '<input class="close_graphics btn" type="button" value="Вернуться к установке"/>' +
-        '<div class="experiment_table graphic"><table><tbody>' +
-        '<tr><td>Время</td><td>Угол отклонения</td>' +
-        '<td>Угловая скорость</td></tr></tbody></table></div>' +
+        '<div class="experiment_table graphic"><table class="fixed_headers"><thead><tr><th>Время</th><th>Угол отклонения</th>' +
+        '<th>Угловая скорость</th></tr></thead><tbody>' +
+        '</tbody></table></div>' +
         '<div class="graphic_angle graphic"><svg width="600" height="220"></svg></div>' +
         '<div class="graphic_speed graphic"><svg width="600" height="220"></svg></div>' +
         '</div><div class="block_help">Справка</div></div>';
@@ -138,9 +138,10 @@ function init_lab() {
     }
 
     function init_experiment_table(table_selector, data) {
+        $(table_selector).empty();
         for (var i = 0; i < data.length; i++) {
-            $(table_selector).append("<tr><td>" + data[i][0] + "</td><td>" + data[i][1] +
-            "</td><td>" + data[i][2] + "</td></tr>");
+            $(table_selector).append("<tr><td>" + data[i][0].toFixed(2) + "</td><td>" + data[i][1].toFixed(7) +
+            "</td><td>" + data[i][2].toFixed(7) + "</td></tr>");
         }
     }
 
@@ -464,7 +465,8 @@ function init_lab() {
         var parse_str;
         if (typeof str === 'string' && str !== "") {
             try {
-                parse_str = JSON.parse(str);
+                parse_str = str.replace(/&quot;/g, "\"");
+                parse_str = JSON.parse(parse_str);
             } catch (e) {
                 parse_str = def_obj;
             }
@@ -579,12 +581,15 @@ function init_lab() {
             $(".block_user_table table").on("focus", "input", function () {
                 check_user_values($(this));
             });
+            $(".block_user_results input").on("focus", function(){
+                check_user_values($(this));
+            })
         },
         calculateHandler: function () {
             lab_animation_data = parse_calculate_results(arguments[0], default_animation_data);
             init_plot(lab_animation_data, ".graphic_angle svg", 1);
             init_plot(lab_animation_data, ".graphic_speed svg", 2);
-            init_experiment_table(".experiment_table table", lab_animation_data);
+            init_experiment_table(".experiment_table table tbody", lab_animation_data);
             unfreeze_installation();
             btn_stop_blocked = false;
             $(".control_stop.not_active").removeClass("not_active");
