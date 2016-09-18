@@ -112,8 +112,15 @@
     margin-left: 25px;
 }
 
-.block_control .control_radius, .block_control .control_duration {
+.block_control .control_radius_slider, .block_control .control_duration_slider {
     cursor: pointer;
+}
+
+.control_radius_value,
+.control_duration_value {
+    margin-right: 5px;
+    min-width: 40px;
+    width: 60px;
 }
 
 .block_control .btn {
@@ -125,7 +132,7 @@
     margin: 5px 15px;
 }
 
-.block_user_table caption {
+.block_user_table_caption {
     text-align: left;
     margin-bottom: 10px;
     font-size: 16px;
@@ -135,14 +142,16 @@
     background: #eeeeee;
     margin-bottom: 15px;
     border-spacing: 0;
+    width: 100%;
     border-collapse: collapse;
     border: 1px solid #3d4652;
     text-align: center;
-    margin-top: 15px;
+    table-layout: fixed;
 }
 
 .block_user_table thead tr th, .block_user_table tbody tr td:first-child {
     background-color: #eeeeee;
+    font-size: 18px;
     padding: 5px;
 }
 
@@ -157,6 +166,8 @@
     box-sizing: border-box;
     border: none;
     height: 100%;
+    text-align: center;
+    font-size: 18px;
 }
 
 .block_user_results {
@@ -171,9 +182,8 @@
 }
 
 .block_user_results input {
-    margin-right: 30%;
     width: 15%;
-    float: right;
+    margin-left: 5px;
 }
 
 .block_user_results label {
@@ -198,7 +208,7 @@
 
 .experiment_table {
     display: block;
-    width: 80%;
+    width: 90%;
     position: relative;
     margin-top: 10px;
     margin-left: auto;
@@ -414,22 +424,38 @@
 
 .fixed_headers td:nth-child(1),
 .fixed_headers th:nth-child(1) {
-    min-width: 130px;
+    min-width: 100px;
+    width: 16%;
+    text-align: center;
 }
 
 .fixed_headers td:nth-child(2),
 .fixed_headers th:nth-child(2) {
     min-width: 180px;
+    width: 42%;
+    text-align: center;
 }
 
 .fixed_headers td:nth-child(3),
 .fixed_headers th:nth-child(3) {
     min-width: 180px;
+    width: 42%;
+    text-align: center;
+}
+
+.fixed_headers td:nth-child(2),
+.fixed_headers td:nth-child(3) {
+    text-align: right;
+}
+
+.cell_right_align {
+    margin-right: 33%;
 }
 
 .fixed_headers thead {
-    background-color: #333333;
-    color: #fdfdfd;
+    border-bottom: 1px solid #000000;
+    background-color: #eeeeee;
+    color: #000000;
 }
 
 .fixed_headers thead tr {
@@ -448,4 +474,8 @@
 
 .fixed_headers tbody tr:nth-child(even) {
     background-color: #eeeeee;
+}
+
+.results_radius_sm {
+    margin-left: 5px;
 }

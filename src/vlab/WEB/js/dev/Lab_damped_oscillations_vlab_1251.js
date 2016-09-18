@@ -36,35 +36,37 @@ function init_lab() {
     var show_graphics_blocked = false;
     var pendulum_timeout;
     var clock_timeout;
+    var LEFT_BOUND_TIME = 1;
+    var RIGHT_BOUND_TIME = 30;
     var window = '<div class="vlab_setting"><div class="block_title"><div class="vlab_name">Виртуальная лаборатория «Затухающие колебания»' +
         '</div><input class="btn_help btn" type="button" value="Справка"/></div><div class="block_pendulum">' +
         '<canvas width="350px" height="300px" class="pendulum_canvas">браузер не поддерживает canvas</canvas>' +
         '<div class="pendulum_graphics"><div class="waiting_loading"></div></div><div class="pendulum_clock">00:<span class="clock_seconds"></span>' +
         '</div></div><div class="block_control"><div class="pendulum_cargo_weight"></div>' +
-        '<label for="control_radius">Радиус <i>r</i></label><input class="control_radius" id="control_radius" type="range" ' +
-        'step="0.1" /><div class="control_radius_value"></div><label for="control_duration">' +
-        'Продолжительность эксперимента <i>S</i></label><input class="control_duration" id="control_duration" type="range" max="30" min="1" step="1"/>' +
-        '<div class="control_duration_value"></div><input class="control_launch btn" type="button" value="Запустить"/>' +
+        '<label for="control_radius_slider">Радиус <i>r</i>:</label><input class="control_radius_slider" id="control_radius_slider" type="range" ' +
+        'step="0.1" /><input class="control_radius_value" type="number" step="0.1"/> см<label for="control_duration_slider">' +
+        'Продолжительность эксперимента <i>S</i>:</label><input class="control_duration_slider" id="control_duration_slider" type="range" max="' + RIGHT_BOUND_TIME + '" min="' + LEFT_BOUND_TIME + '" step="1"/>' +
+        '<input class="control_duration_value" type="number" step="1" min="'+ LEFT_BOUND_TIME + '" max="' + RIGHT_BOUND_TIME + '"> c<input class="control_launch btn" type="button" value="Запустить"/>' +
         '<input class="control_stop btn" type="button" value="Стоп"/>' +
-        '</div><div class="block_user_table"><table><caption class="user_table_name">Таблица экспериментов</caption>' +
-        '<thead class="user_table_head"><tr><th>№</th><th><i>r</i></th><th><i>t<sub>1</sub></i></th><th>&#966;(<i>t<sub>1</sub></i>)</th>' +
-        '<th><i>t<sub>2</sub></i></th><th>&#966;(<i>t<sub>2</sub></i>)</th><th><i>S</i></th></tr></thead><tbody class="user_table_body">' +
+        '</div><div class="block_user_table"><div class="block_user_table_caption">Таблица экспериментов</div><table>' +
+        '<thead class="user_table_head"><tr><th>№</th><th><i>r</i>, см</th><th><i>t<sub>1</sub></i>, с</th><th>&#966;(<i>t<sub>1</sub></i>), рад</th>' +
+        '<th><i>t<sub>2</sub></i>, с</th><th>&#966;(<i>t<sub>2</sub></i>), рад</th><th><i>S</i>, с</th></tr></thead><tbody class="user_table_body">' +
         '<tr class="row_1"><td class="experiment_number">1</td><td class="experiment_radius"><input type="text"/></td>' +
         '<td class="experiment_time_1"><input type="text"/></td><td class="experiment_angle_1"><input type="text"/></td>' +
         '<td class="experiment_time_2"><input type="text"/></td><td class="experiment_angle_2"><input type="text"/></td>' +
         '<td class="experiment_time"><input type="text"/></td></tr></tbody></table>' +
         '<input class="table_add_row btn" type="button" value="+"/><input class="table_delete_row not_active btn" type="button" value="-"/></div>' +
         '<div class="block_user_results"><div><label for="results_gyration_radius">Радиус инерции груза <i>i</i>: </label>' +
-        '<input class="results_gyration_radius" id="results_gyration_radius" type="text"/></div>' +
+        '<input class="results_gyration_radius" id="results_gyration_radius" type="number" step="0.001" min="0"/><span class="results_radius_sm">см</span></div>' +
         '<div><label for="results_friction_coefficient">Коэффициент вязкого трения подшипника &#957;: </label>' +
-        '<input class="results_friction_coefficient" id="results_friction_coefficient" type="text"/></div></div>' +
+        '<input class="results_friction_coefficient" id="results_friction_coefficient" type="number" step="0.001" min="0"/></div></div>' +
         '<div class="block_graphics">' +
         '<input class="show_experiment_table btn" type="button" value="Таблица результатов"/>' +
         '<button class="show_graphic_angle btn" type="button">График &#966;(<i>t</i>)</button>' +
         '<button class="show_graphic_speed btn" type="button">График &#631;(<i>t</i>)</button>' +
         '<input class="close_graphics btn" type="button" value="Вернуться к установке"/>' +
-        '<div class="experiment_table graphic"><table class="fixed_headers"><thead><tr><th>Время</th><th>Угол отклонения</th>' +
-        '<th>Угловая скорость</th></tr></thead><tbody>' +
+        '<div class="experiment_table graphic"><table class="fixed_headers"><thead><tr><th>Время <i>t</i>, с</th><th>Угол отклонения &#966;(<i>t</i>), рад</th>' +
+        '<th>Угловая скорость &#631;(<i>t</i>), рад/с</th></tr></thead><tbody>' +
         '</tbody></table></div>' +
         '<div class="graphic_angle graphic"><svg width="600" height="220"></svg></div>' +
         '<div class="graphic_speed graphic"><svg width="600" height="220"></svg></div>' +
@@ -76,8 +78,10 @@ function init_lab() {
         btn_stop_blocked = true;
         $(".control_stop").addClass("not_active");
         $(".control_launch").addClass("not_active");
-        $(".control_radius").addClass("not_active").attr("readonly", "readonly");
-        $(".control_duration").addClass("not_active").attr("readonly", "readonly");
+        $(".control_radius_slider").addClass("not_active").attr("readonly", "readonly");
+        $(".control_duration_slider").addClass("not_active").attr("readonly", "readonly");
+        $(".control_radius_value").addClass("not_active").attr("readonly", "readonly");
+        $(".control_duration_value").addClass("not_active").attr("readonly", "readonly");
     }
 
     function check_user_values(that) {
@@ -115,8 +119,10 @@ function init_lab() {
         controls_blocked = false;
         $(".control_launch.not_active").removeClass("not_active");
         $(".control_stop").addClass("not_active");
-        $(".control_radius.not_active").removeAttr("readonly").removeClass("not_active");
-        $(".control_duration.not_active").removeAttr("readonly").removeClass("not_active");
+        $(".control_radius_slider.not_active").removeAttr("readonly").removeClass("not_active");
+        $(".control_duration_slider.not_active").removeAttr("readonly").removeClass("not_active");
+        $(".control_radius_value.not_active").removeAttr("readonly").removeClass("not_active");
+        $(".control_duration_value.not_active").removeAttr("readonly").removeClass("not_active");
     }
 
     function freeze_installation() {
@@ -140,8 +146,8 @@ function init_lab() {
     function init_experiment_table(table_selector, data) {
         $(table_selector).empty();
         for (var i = 0; i < data.length; i++) {
-            $(table_selector).append("<tr><td>" + data[i][0].toFixed(2) + "</td><td>" + data[i][1].toFixed(7) +
-            "</td><td>" + data[i][2].toFixed(7) + "</td></tr>");
+            $(table_selector).append("<tr><td>" + data[i][0].toFixed(2) + "</td><td><span class='cell_right_align'>" + data[i][1].toFixed(7) +
+            "</span></td><td><span class='cell_right_align'>" + data[i][2].toFixed(7) + "</span></td></tr>");
         }
     }
 
@@ -449,15 +455,27 @@ function init_lab() {
         ANT.calculate();
     }
 
-    function change_radius() {
-        $(".control_radius_value").html($(".control_radius").val() + " см");
-        pendulum_radius = $(".control_radius").val();
+    function change_radius_value() {
+        $(".control_radius_value").val($(".control_radius_slider").val());
+        pendulum_radius = $(".control_radius_slider").val();
         draw_pendulum(pendulum_radius * length_coefficient);
     }
 
-    function change_duration() {
-        $(".control_duration_value").html($(".control_duration").val() + " с");
-        experiment_time = $(".control_duration").val();
+    function change_duration_value() {
+        $(".control_duration_value").val($(".control_duration_slider").val());
+        experiment_time = $(".control_duration_slider").val();
+        put_seconds(experiment_time);
+    }
+
+    function change_radius_slider() {
+        $(".control_radius_slider").val($(".control_radius_value").val());
+        pendulum_radius = $(".control_radius_value").val();
+        draw_pendulum(pendulum_radius * length_coefficient);
+    }
+
+    function change_duration_slider() {
+        $(".control_duration_slider").val($(".control_duration_value").val());
+        experiment_time = $(".control_duration_value").val();
         put_seconds(experiment_time);
     }
 
@@ -524,11 +542,11 @@ function init_lab() {
             container = $("#jsLab")[0];
             container.innerHTML = window;
             $(".control_stop").addClass("not_active");
-            $(".pendulum_cargo_weight").html("Масса груза = " + mass + " кг");
-            $("#control_radius").attr("max", right_bound).attr("min", left_bound).attr("value", pendulum_radius);
-            $(".control_radius_value").html(pendulum_radius + " см");
-            $("#control_duration").attr("value", experiment_time);
-            $(".control_duration_value").html(experiment_time + " с");
+            $(".pendulum_cargo_weight").html("Масса груза <i>m</i>: " + mass + " кг");
+            $("#control_radius_slider").attr("max", right_bound).attr("min", left_bound).attr("value", pendulum_radius);
+            $(".control_radius_value").attr("max", right_bound).attr("min", left_bound).attr("value", pendulum_radius);
+            $("#control_duration_slider").attr("value", experiment_time);
+            $(".control_duration_value").attr("value", experiment_time);
             put_seconds(experiment_time);
             draw_pendulum(pendulum_radius * length_coefficient);
             if ($("#previousSolution") !== null && $("#previousSolution").val() !== "") {
@@ -539,14 +557,34 @@ function init_lab() {
                     launch();
                 }
             });
-            $(".control_radius").change(function () {
+            $(".control_radius_slider").change(function () {
                 if (!controls_blocked) {
-                    change_radius();
+                    change_radius_value();
                 }
             });
-            $(".control_duration").change(function () {
+            $(".control_duration_slider").change(function () {
                 if (!controls_blocked) {
-                    change_duration();
+                    change_duration_value();
+                }
+            });
+            $(".control_radius_value").change(function () {
+                if (!controls_blocked) {
+                    if ($(this).val() < left_bound) {
+                        $(this).val(left_bound)
+                    } else if($(this).val() > right_bound){
+                        $(this).val(right_bound)
+                    }
+                    change_radius_slider();
+                }
+            });
+            $(".control_duration_value").change(function () {
+                if (!controls_blocked) {
+                    if ($(this).val() < LEFT_BOUND_TIME) {
+                        $(this).val(LEFT_BOUND_TIME)
+                    } else if($(this).val() > RIGHT_BOUND_TIME){
+                        $(this).val(RIGHT_BOUND_TIME)
+                    }
+                    change_duration_slider();
                 }
             });
             $(".table_add_row").click(function () {
@@ -583,7 +621,7 @@ function init_lab() {
             });
             $(".block_user_results input").on("focus", function(){
                 check_user_values($(this));
-            })
+            });
         },
         calculateHandler: function () {
             lab_animation_data = parse_calculate_results(arguments[0], default_animation_data);
