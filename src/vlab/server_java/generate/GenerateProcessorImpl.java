@@ -47,7 +47,7 @@ public class GenerateProcessorImpl implements GenerateProcessor {
                     new GenerateCodeResult(
                             new BigDecimal[]{
                                     new BigDecimal(radius_bounds_a),
-                                    new BigDecimal((radius_bounds_b))
+                                    new BigDecimal(radius_bounds_b)
                             },
                             new BigDecimal(mass))
             );

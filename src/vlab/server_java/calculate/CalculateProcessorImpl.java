@@ -17,9 +17,6 @@ import static vlab.server_java.model.util.HtmlParamEscaper.prepareInputJsonStrin
 public class CalculateProcessorImpl implements CalculateProcessor {
     @Override
     public CalculatingResult calculate(String condition, String instructions, GeneratingResult generatingResult) {
-        //do calculate logic here
-        String text = "text";
-        String code = "code";
 
         condition = prepareInputJsonString(condition);
 
