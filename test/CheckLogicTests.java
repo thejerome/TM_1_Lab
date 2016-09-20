@@ -9,6 +9,7 @@ import rlcp.generate.GeneratingResult;
 import rlcp.server.processor.check.CheckProcessor;
 import rlcp.server.processor.check.PreCheckResultAwareCheckProcessor;
 import rlcp.server.processor.factory.ProcessorFactory;
+import vlab.server_java.model.util.HtmlParamEscaper;
 
 import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.IsEqual.equalTo;
@@ -17,6 +18,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
+import static vlab.server_java.model.util.HtmlParamEscaper.prepareInputJsonString;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("classpath:test-*-server-config.xml")
@@ -31,10 +33,15 @@ public class CheckLogicTests {
     public void testCheckSingleCondition() throws Exception {
         PreCheckResultAwareCheckProcessor processor = (PreCheckResultAwareCheckProcessor) checkProcessor.getInstance();
 
+        String code = "{&quot;radius_bounds&quot;:[3,3],&quot;mass&quot;:1}";
+        String inst = "{&quot;i&quot;:0.3,&quot;v&quot;:0.1}";
+
         GeneratingResult generatingResult = mock(GeneratingResult.class);
         when(generatingResult.getText()).thenReturn("textPreGenerated");
-        when(generatingResult.getCode()).thenReturn("codePreGenerated");
-        when(generatingResult.getInstructions()).thenReturn("instructionsPreGenerated");
+        when(generatingResult.getCode()).thenReturn(code);
+        when(generatingResult.getInstructions()).thenReturn(inst);
+
+
 
         ConditionForChecking conditionForChecking = mock(ConditionForChecking.class);
         when(conditionForChecking.getId()).thenReturn(1);
@@ -42,7 +49,9 @@ public class CheckLogicTests {
         when(conditionForChecking.getOutput()).thenReturn("getOutput");
         when(conditionForChecking.getInput()).thenReturn("getInput");
 
-        CheckProcessor.CheckingSingleConditionResult result = processor.checkSingleCondition(conditionForChecking, "instructions", generatingResult);
+        String instructions = HtmlParamEscaper.escapeParam("{\"table\":[{\"r\":12,\"t1\":12,\"phi1\":12,\"t2\":12,\"phi2\":12,\"S\":12},{\"r\":12,\"t1\":12,\"phi1\":12,\"t2\":12,\"phi2\":12,\"S\":12}],\"i\":12,\"v\":12}");
+
+        CheckProcessor.CheckingSingleConditionResult result = processor.checkSingleCondition(conditionForChecking, instructions, generatingResult);
         assertThat(result.getComment(), is(not(equalTo(""))));
         assertThat(result.getResult(), is(not(equalTo(""))));
     }
