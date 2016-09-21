@@ -34,7 +34,7 @@ public class CheckLogicTests {
         PreCheckResultAwareCheckProcessor processor = (PreCheckResultAwareCheckProcessor) checkProcessor.getInstance();
 
         String code = "{&quot;radius_bounds&quot;:[3,3],&quot;mass&quot;:1}";
-        String inst = "{&quot;i&quot;:0.3,&quot;v&quot;:0.1}";
+        String inst = "{&quot;i&quot;:null,&quot;v&quot;:0.1}";
 
         GeneratingResult generatingResult = mock(GeneratingResult.class);
         when(generatingResult.getText()).thenReturn("textPreGenerated");
@@ -49,7 +49,7 @@ public class CheckLogicTests {
         when(conditionForChecking.getOutput()).thenReturn("getOutput");
         when(conditionForChecking.getInput()).thenReturn("getInput");
 
-        String instructions = HtmlParamEscaper.escapeParam("{\"table\":[{\"r\":12,\"t1\":12,\"phi1\":12,\"t2\":12,\"phi2\":12,\"S\":12},{\"r\":12,\"t1\":12,\"phi1\":12,\"t2\":12,\"phi2\":12,\"S\":12}],\"i\":12,\"v\":12}");
+        String instructions = HtmlParamEscaper.escapeParam("{\"table\":[{\"r\":null,\"t1\":12,\"phi1\":12,\"t2\":12,\"phi2\":12,\"S\":12},{\"r\":12,\"t1\":12,\"phi1\":12,\"t2\":12,\"phi2\":12,\"S\":12}],\"i\":12,\"v\":12}");
 
         CheckProcessor.CheckingSingleConditionResult result = processor.checkSingleCondition(conditionForChecking, instructions, generatingResult);
         assertThat(result.getComment(), is(not(equalTo(""))));

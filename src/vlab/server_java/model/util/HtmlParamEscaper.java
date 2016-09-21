@@ -98,6 +98,9 @@ public class HtmlParamEscaper {
     }
 
     public static BigDecimal shrink(BigDecimal v){
+        if (v == null) {
+            v = BigDecimal.ZERO;
+        }
         return v.setScale(6, BigDecimal.ROUND_HALF_UP);
     }
 }
