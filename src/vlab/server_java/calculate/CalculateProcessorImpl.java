@@ -33,7 +33,7 @@ public class CalculateProcessorImpl implements CalculateProcessor {
             GenerateCodeResult varCode = objectMapper.readValue(generatingResult.getCode(), GenerateCodeResult.class);
             GenerateInstructionsResult varInstr = objectMapper.readValue(generatingResult.getInstructions(), GenerateInstructionsResult.class);
             CalculateCodeResult result = new RungeKuttaLab1().calculate(calculateTask, varCode, varInstr);
-            return new CalculatingResult("ok", escapeParam(objectMapper.writeValueAsString(result)));
+            return new CalculatingResult("ok", escapeParam(escapeParam(objectMapper.writeValueAsString(result))));
         } catch (Exception e) {
             return new CalculatingResult("error", e.toString());
         }
