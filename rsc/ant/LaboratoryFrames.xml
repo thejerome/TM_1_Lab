@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<LaboratoryFrames>
-	<FrameIndex Scheme="1" FrameID="1">
-		<LaboratoryFrame Name="Задание 1" TimeLimit="30" TimeScale="Minute" ShowTime="Yes" Language="ru">
-			<ToolIndex Scheme="1" ToolID="1"/>
-			<Data contentType="xhtml">test</Data>
+<LaboratoryFrames xmlns="http://www.w3.org/1999/xhtml" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.w3.org/1999/xhtml http://de.ifmo.ru/--schema/LaboratoryFrames.xsd" >
+	<FrameIndex Scheme="7521" FrameID="1">
+		<LaboratoryFrame Name="Затухающие колебания" TimeLimit="30" TimeScale="Minute" ShowTime="Yes" Language="ru">
+			<ToolIndex Scheme="7521" ToolID="1"/>
+			<Data contentType="xhtml">Требуется провести несколько экспериментов, заполняя таблицу, после чего исходя из данных таблицы найти радиус инерции и коэффициент вязкого трения подшипника.</Data>
 			<LaboratoryTestsGroups LaboratoryTestsGroupsID="1" LimitOnCollection="1800" LimitOnTest="1800" TimeScale="Second" URL="rlcp://dlc:dlc@127.0.0.1:14101" Weight="1" >
-				<LaboratoryTestsGroup LaboratoryTestsGroupID="1" Number="1" LimitOnTest="1800" TimeScale="Second" URL="rlcp://dlc:dlc@127.0.0.1:14101" Weight="1" >
-					<LaboratoryTest TestID="1" LimitOnTest="1800" TimeScale="Second" URL="rlcp://dlc:dlc@127.0.0.1:14101" Weight="1" >
+				<LaboratoryTestsGroup LaboratoryTestsGroupID="1" Number="1" LimitOnTest="1800" TimeScale="Second" Weight="1" >
+					<LaboratoryTest TestID="1" LimitOnTest="1800" TimeScale="Second" Weight="1" >
 						<LaboratoryTestInput>
-							<!-- some -->
+							<!-- nothing -->
 						</LaboratoryTestInput>						
 						<LaboratoryTestOutput>
-							<!-- somw -->
+							<!-- nothing -->
 						</LaboratoryTestOutput>
 					</LaboratoryTest>
 				</LaboratoryTestsGroup>
