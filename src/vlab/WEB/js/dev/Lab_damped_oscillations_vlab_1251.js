@@ -37,39 +37,39 @@ function init_lab() {
         clock_timeout,
         LEFT_BOUND_TIME = 1,
         RIGHT_BOUND_TIME = 30,
-        window = '<div class="vlab_setting"><div class="block_title"><div class="vlab_name">Р’РёСЂС‚СѓР°Р»СЊРЅР°СЏ Р»Р°Р±РѕСЂР°С‚РѕСЂРёСЏ В«Р—Р°С‚СѓС…Р°СЋС‰РёРµ РєРѕР»РµР±Р°РЅРёСЏВ»' +
-            '</div><input class="btn_help btn" type="button" value="РЎРїСЂР°РІРєР°"/></div><div class="block_pendulum">' +
-            '<canvas width="350px" height="300px" class="pendulum_canvas">Р±СЂР°СѓР·РµСЂ РЅРµ РїРѕРґРґРµСЂР¶РёРІР°РµС‚ canvas</canvas>' +
+        window = '<div class="vlab_setting"><div class="block_title"><div class="vlab_name">Виртуальная лаборатория «Затухающие колебания»' +
+            '</div><input class="btn_help btn" type="button" value="Справка"/></div><div class="block_pendulum">' +
+            '<canvas width="350px" height="300px" class="pendulum_canvas">браузер не поддерживает canvas</canvas>' +
             '<div class="pendulum_graphics"><div class="waiting_loading"></div></div><div class="pendulum_clock">00:<span class="clock_seconds"></span>' +
             '</div></div><div class="block_control"><div class="pendulum_cargo_weight"></div>' +
-            '<label for="control_radius_slider">Р Р°РґРёСѓСЃ <i>r</i>:</label><input class="control_radius_slider" id="control_radius_slider" type="range" ' +
-            'step="0.1" /><input class="control_radius_value" type="number" step="0.1"/> СЃРј<label for="control_duration_slider">' +
-            'РџСЂРѕРґРѕР»Р¶РёС‚РµР»СЊРЅРѕСЃС‚СЊ СЌРєСЃРїРµСЂРёРјРµРЅС‚Р° <i>S</i>:</label><input class="control_duration_slider" id="control_duration_slider" type="range" max="' + RIGHT_BOUND_TIME + '" min="' + LEFT_BOUND_TIME + '" step="1"/>' +
-            '<input class="control_duration_value" type="number" step="1" min="'+ LEFT_BOUND_TIME + '" max="' + RIGHT_BOUND_TIME + '"> c<input class="control_launch btn" type="button" value="Р—Р°РїСѓСЃС‚РёС‚СЊ"/>' +
-            '<input class="control_stop btn" type="button" value="РЎС‚РѕРї"/>' +
-            '</div><div class="block_user_table"><div class="block_user_table_caption">РўР°Р±Р»РёС†Р° СЌРєСЃРїРµСЂРёРјРµРЅС‚РѕРІ</div><table>' +
-            '<thead class="user_table_head"><tr><th>в„–</th><th><i>r</i>, СЃРј</th><th><i>t<sub>1</sub></i>, СЃ</th><th>&#966;(<i>t<sub>1</sub></i>), СЂР°Рґ</th>' +
-            '<th><i>t<sub>2</sub></i>, СЃ</th><th>&#966;(<i>t<sub>2</sub></i>), СЂР°Рґ</th><th><i>S</i></th></tr></thead><tbody class="user_table_body">' +
+            '<label for="control_radius_slider">Радиус <i>r</i>:</label><input class="control_radius_slider" id="control_radius_slider" type="range" ' +
+            'step="0.1" /><input class="control_radius_value" type="number" step="0.1"/> см<label for="control_duration_slider">' +
+            'Продолжительность эксперимента <i>S</i>:</label><input class="control_duration_slider" id="control_duration_slider" type="range" max="' + RIGHT_BOUND_TIME + '" min="' + LEFT_BOUND_TIME + '" step="1"/>' +
+            '<input class="control_duration_value" type="number" step="1" min="'+ LEFT_BOUND_TIME + '" max="' + RIGHT_BOUND_TIME + '"> c<input class="control_launch btn" type="button" value="Запустить"/>' +
+            '<input class="control_stop btn" type="button" value="Стоп"/>' +
+            '</div><div class="block_user_table"><div class="block_user_table_caption">Таблица экспериментов</div><table>' +
+            '<thead class="user_table_head"><tr><th>№</th><th><i>r</i>, см</th><th><i>t<sub>1</sub></i>, с</th><th>&#966;(<i>t<sub>1</sub></i>), рад</th>' +
+            '<th><i>t<sub>2</sub></i>, с</th><th>&#966;(<i>t<sub>2</sub></i>), рад</th><th><i>S</i></th></tr></thead><tbody class="user_table_body">' +
             '<tr class="row_1"><td class="experiment_number">1</td><td class="experiment_radius"><input type="text"/></td>' +
             '<td class="experiment_time_1"><input type="text"/></td><td class="experiment_angle_1"><input type="text"/></td>' +
             '<td class="experiment_time_2"><input type="text"/></td><td class="experiment_angle_2"><input type="text"/></td>' +
             '<td class="experiment_time"><input type="text"/></td></tr></tbody></table>' +
             '<input class="table_add_row btn" type="button" value="+"/><input class="table_delete_row not_active btn" type="button" value="-"/></div>' +
-            '<div class="block_user_results"><div><label for="results_gyration_radius">Р Р°РґРёСѓСЃ РёРЅРµСЂС†РёРё РіСЂСѓР·Р° <i>i</i>: </label>' +
-            '<input class="results_gyration_radius" id="results_gyration_radius" type="number" step="0.001" min="0"/><span class="results_radius_sm">СЃРј</span></div>' +
-            '<div><label for="results_friction_coefficient">РљРѕСЌС„С„РёС†РёРµРЅС‚ РІСЏР·РєРѕРіРѕ С‚СЂРµРЅРёСЏ РїРѕРґС€РёРїРЅРёРєР° &#957;: </label>' +
+            '<div class="block_user_results"><div><label for="results_gyration_radius">Радиус инерции груза <i>i</i>: </label>' +
+            '<input class="results_gyration_radius" id="results_gyration_radius" type="number" step="0.001" min="0"/><span class="results_radius_sm">см</span></div>' +
+            '<div><label for="results_friction_coefficient">Коэффициент вязкого трения подшипника &#957;: </label>' +
             '<input class="results_friction_coefficient" id="results_friction_coefficient" type="number" step="0.001" min="0"/></div></div>' +
             '<div class="block_graphics">' +
-            '<input class="show_experiment_table btn" type="button" value="РўР°Р±Р»РёС†Р° СЂРµР·СѓР»СЊС‚Р°С‚РѕРІ"/>' +
-            '<button class="show_graphic_angle btn" type="button">Р“СЂР°С„РёРє &#966;(<i>t</i>)</button>' +
-            '<button class="show_graphic_speed btn" type="button">Р“СЂР°С„РёРє &#631;(<i>t</i>)</button>' +
-            '<input class="close_graphics btn" type="button" value="Р’РµСЂРЅСѓС‚СЊСЃСЏ Рє СѓСЃС‚Р°РЅРѕРІРєРµ"/>' +
-            '<div class="experiment_table graphic"><table class="fixed_headers"><thead><tr><th>Р’СЂРµРјСЏ <i>t</i>, СЃ</th><th>РЈРіРѕР» РѕС‚РєР»РѕРЅРµРЅРёСЏ &#966;(<i>t</i>), СЂР°Рґ</th>' +
-            '<th>РЈРіР»РѕРІР°СЏ СЃРєРѕСЂРѕСЃС‚СЊ &#631;(<i>t</i>), СЂР°Рґ/СЃ</th></tr></thead><tbody>' +
+            '<input class="show_experiment_table btn" type="button" value="Таблица результатов"/>' +
+            '<button class="show_graphic_angle btn" type="button">График &#966;(<i>t</i>)</button>' +
+            '<button class="show_graphic_speed btn" type="button">График &#631;(<i>t</i>)</button>' +
+            '<input class="close_graphics btn" type="button" value="Вернуться к установке"/>' +
+            '<div class="experiment_table graphic"><table class="fixed_headers"><thead><tr><th>Время <i>t</i>, с</th><th>Угол отклонения &#966;(<i>t</i>), рад</th>' +
+            '<th>Угловая скорость &#631;(<i>t</i>), рад/с</th></tr></thead><tbody>' +
             '</tbody></table></div>' +
             '<div class="graphic_angle graphic"><svg width="600" height="220"></svg></div>' +
             '<div class="graphic_speed graphic"><svg width="600" height="220"></svg></div>' +
-            '</div><div class="block_help">РЎРїСЂР°РІРєР°</div></div>';
+            '</div><div class="block_help">Справка</div></div>';
 
     function freeze_control_block() {
         controls_blocked = true;
@@ -257,11 +257,11 @@ function init_lab() {
         if (!help_active) {
             help_active = true;
             $(".block_help").css("display", "block");
-            $(".btn_help").attr("value", "Р’РµСЂРЅСѓС‚СЊСЃСЏ");
+            $(".btn_help").attr("value", "Вернуться");
         } else {
             help_active = false;
             $(".block_help").css("display", "none");
-            $(".btn_help").attr("value", "РЎРїСЂР°РІРєР°");
+            $(".btn_help").attr("value", "Справка");
         }
     }
 
@@ -568,7 +568,7 @@ function init_lab() {
             container = $("#jsLab")[0];
             container.innerHTML = window;
             $(".control_stop").addClass("not_active");
-            $(".pendulum_cargo_weight").html("РњР°СЃСЃР° РіСЂСѓР·Р° <i>m</i>: " + mass + " РєРі");
+            $(".pendulum_cargo_weight").html("Масса груза <i>m</i>: " + mass + " кг");
             $("#control_radius_slider").attr("max", right_bound).attr("min", left_bound).attr("value", pendulum_radius);
             $(".control_radius_value").attr("max", right_bound).attr("min", left_bound).attr("value", pendulum_radius);
             $("#control_duration_slider").attr("value", experiment_time);
