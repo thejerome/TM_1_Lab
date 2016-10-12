@@ -1,5 +1,5 @@
 .vlab_setting {
-    width: 700px;
+    width: 740px;
     height: 700px;
     border: 2px solid #3d4652;
     margin: 10px;
@@ -36,7 +36,7 @@
 }
 
 .block_pendulum {
-    width: 55%;
+    width: 52%;
     border-top: 1px solid #4f5e6d;
     box-sizing: border-box;
     position: relative;
@@ -76,7 +76,7 @@
 }
 
 .block_control {
-    width: 45%;
+    width: 48%;
     border-bottom: 1px solid #3d4652;
     border-left: 1px solid #3d4652;
     background-color: #eeeeee;
@@ -156,6 +156,10 @@
     background-color: #eeeeee;
     font-size: 18px;
     padding: 5px;
+}
+
+.block_user_table thead tr th:first-child{
+    width: 7%;
 }
 
 .block_user_table th, .block_user_table td {

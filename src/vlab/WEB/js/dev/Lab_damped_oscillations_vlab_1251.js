@@ -17,7 +17,6 @@ function init_lab() {
         FREE_ENDING = 8,
         pendulum_radius,
         experiment_time = 8,
-        table_experiments_rows = 1,
         help_active = false,
         graphics_active = false,
         default_var = {
@@ -50,15 +49,18 @@ function init_lab() {
             '</div><div class="block_user_table"><div class="block_user_table_caption">Таблица экспериментов</div><table>' +
             '<thead class="user_table_head"><tr><th>№</th><th><i>r</i>, см</th><th><i>t<sub>1</sub></i>, с</th><th>&#966;(<i>t<sub>1</sub></i>), рад</th>' +
             '<th><i>t<sub>2</sub></i>, с</th><th>&#966;(<i>t<sub>2</sub></i>), рад</th><th><i>S</i></th></tr></thead><tbody class="user_table_body">' +
-            '<tr class="row_1"><td class="experiment_number">1</td><td class="experiment_radius"><input type="text"/></td>' +
-            '<td class="experiment_time_1"><input type="text"/></td><td class="experiment_angle_1"><input type="text"/></td>' +
-            '<td class="experiment_time_2"><input type="text"/></td><td class="experiment_angle_2"><input type="text"/></td>' +
-            '<td class="experiment_time"><input type="text"/></td></tr></tbody></table>' +
+            '<tr class="row_1"><td class="experiment_number">1</td>' +
+            '<td class="experiment_radius"><input type="number" min="0" step="0.1"/></td>' +
+            '<td class="experiment_time_1"><input type="number" min="0" step="0.02"/></td>' +
+            '<td class="experiment_angle_1"><input type="number" step="0.000001"/></td>' +
+            '<td class="experiment_time_2"><input type="number" min="0" step="0.02"/></td>' +
+            '<td class="experiment_angle_2"><input type="number" step="0.000001"/></td>' +
+            '<td class="experiment_time"><input type="number" step="0.5" min="0"/></td></tr></tbody></table>' +
             '<input class="table_add_row btn" type="button" value="+"/><input class="table_delete_row not_active btn" type="button" value="-"/></div>' +
             '<div class="block_user_results"><div><label for="results_gyration_radius">Радиус инерции груза <i>i</i>: </label>' +
-            '<input class="results_gyration_radius" id="results_gyration_radius" type="number" step="0.001" min="0"/><span class="results_radius_sm">см</span></div>' +
+            '<input class="results_gyration_radius" id="results_gyration_radius" type="number" step="0.01" min="0"/><span class="results_radius_sm">см</span></div>' +
             '<div><label for="results_friction_coefficient">Коэффициент вязкого трения подшипника &#957;: </label>' +
-            '<input class="results_friction_coefficient" id="results_friction_coefficient" type="number" step="0.001" min="0"/></div></div>' +
+            '<input class="results_friction_coefficient" id="results_friction_coefficient" type="number" step="0.01" min="0"/></div></div>' +
             '<div class="block_graphics">' +
             '<input class="show_experiment_table btn" type="button" value="Таблица результатов"/>' +
             '<button class="show_graphic_angle btn" type="button">График &#966;(<i>t</i>)</button>' +
@@ -81,35 +83,6 @@ function init_lab() {
         $(".control_duration_slider").addClass("not_active").attr("readonly", "readonly");
         $(".control_radius_value").addClass("not_active").attr("readonly", "readonly");
         $(".control_duration_value").addClass("not_active").attr("readonly", "readonly");
-    }
-
-    function check_user_values(that) {
-        that.focusout(function () {
-            if ($(this).val().match(/^[0-9]+(\.[0-9]+){0,1}$/)) {
-                $(this).attr("value", $(this).val());
-            } else {
-                if ($(this).val().match(/^[0-9]+(,[0-9]+){0,1}$/)) {
-                    $(this).val($(this).val().replace(",", "."));
-                    $(this).attr("value", $(this).val());
-                } else {
-                    $(this).val("");
-                    $(this).attr("value", $(this).val());
-                }
-            }
-        });
-        that.mouseout(function () {
-            if ($(this).val().match(/^[0-9]+(\.[0-9]+){0,1}$/)) {
-                $(this).attr("value", $(this).val());
-            } else {
-                if ($(this).val().match(/^[0-9]+(,[0-9]+){0,1}$/)) {
-                    $(this).val($(this).val().replace(",", "."));
-                    $(this).attr("value", $(this).val());
-                } else {
-                    $(this).val("");
-                    $(this).attr("value", $(this).val());
-                }
-            }
-        });
     }
 
     function unfreeze_control_block() {
@@ -216,26 +189,24 @@ function init_lab() {
     }
 
     function increase_table_rows() {
-        table_experiments_rows++;
-        var new_row = '<tr class="row_' + table_experiments_rows + '">' +
-            '<td class="experiment_number">' + table_experiments_rows + '</td>' +
-            '<td class="experiment_radius"><input type="text"/></td>' +
-            '<td class="experiment_time_1"><input type="text"/></td>' +
-            '<td class="experiment_angle_1"><input type="text"/></td>' +
-            '<td class="experiment_time_2"><input type="text"/></td>' +
-            '<td class="experiment_angle_2"><input type="text"/></td>' +
-            '<td class="experiment_time"><input type="text"/></td></tr>';
+        var new_row = '<tr class="row">' +
+            '<td class="experiment_number">' + ($(".user_table_body").children().length + 1) + '</td>' +
+            '<td class="experiment_radius"><input type="number" min="0" step="0.1"/></td>' +
+            '<td class="experiment_time_1"><input type="number" min="0"  step="0.02"/></td>' +
+            '<td class="experiment_angle_1"><input type="number" step="0.000001"/></td>' +
+            '<td class="experiment_time_2"><input type="number" min="0" step="0.02"/></td>' +
+            '<td class="experiment_angle_2"><input type="number" step="0.000001"/></td>' +
+            '<td class="experiment_time"><input type="number" step="0.5" min="0"/></td></tr>';
         $('.user_table_body').append(new_row);
-        if ((table_experiments_rows) > 1) {
+        if (($(".user_table_body").children().length) > 1) {
             $(".table_delete_row.btn.not_active").removeClass("not_active");
         }
     }
 
     function decrease_table_rows() {
-        if (table_experiments_rows > 1) {
-            table_experiments_rows--;
+        if ($(".user_table_body").children().length > 1) {
             $('.user_table_body tr:last-child').remove();
-            if ((table_experiments_rows) === 1) {
+            if ($(".user_table_body").children().length === 1) {
                 $(".table_delete_row.btn").addClass("not_active");
             }
         }
@@ -535,18 +506,40 @@ function init_lab() {
         if ((previous_solution.table.length) > 1) {
             $(".table_delete_row.btn.not_active").removeClass("not_active");
         }
-        table_experiments_rows = 0;
         $('.user_table_body').empty();
         for (var i=0; i < previous_solution.table.length; i++) {
-            table_experiments_rows++;
-            var new_row = '<tr class="row_' + table_experiments_rows + '">' +
-                '<td class="experiment_number">' + table_experiments_rows + '</td>' +
-                '<td class="experiment_radius"><input type="text" value="' + previous_solution.r + '"/></td>' +
-                '<td class="experiment_time_1"><input type="text" value="' + previous_solution.t1 + '"/></td>' +
-                '<td class="experiment_angle_1"><input type="text" value="' + previous_solution.phi1 + '"/></td>' +
-                '<td class="experiment_time_2"><input type="text" value="' + previous_solution.t2 + '"/></td>' +
-                '<td class="experiment_angle_2"><input type="text" value="' + previous_solution.phi2 + '"/></td>' +
-                '<td class="experiment_time"><input type="text" value="' + previous_solution.S + '"/></td></tr>';
+            var new_row = '<tr class="row">' +
+                '<td class="experiment_number">' + ($(".user_table_body").children().length + 1) + '</td>' +
+                '<td class="experiment_radius"><input type="number" min="0" step="0.1" value="' + function(){
+                    if (previous_solution.table[i].r != null){
+                        return previous_solution.table[i].r;
+                    } else return ""
+                }() + '"/></td>' +
+                '<td class="experiment_time_1"><input type="number" min="0" step="0.02" value="' + function(){
+                    if (previous_solution.table[i].t1 != null){
+                        return previous_solution.table[i].t1;
+                    } else return ""
+                }() + '"/></td>' +
+                '<td class="experiment_angle_1"><input type="number" step="0.000001" value="' + function(){
+                    if (previous_solution.table[i].phi1 != null){
+                        return previous_solution.table[i].phi1;
+                    } else return ""
+                }() + '"/></td>' +
+                '<td class="experiment_time_2"><input type="number" min="0" step="0.02" value="' + function(){
+                    if (previous_solution.table[i].t2 != null){
+                        return previous_solution.table[i].t2;
+                    } else return ""
+                }() + '"/></td>' +
+                '<td class="experiment_angle_2"><input type="number" step="0.000001" value="' + function(){
+                    if (previous_solution.table[i].phi2 != null){
+                        return previous_solution.table[i].phi2;
+                    } else return ""
+                }() + '"/></td>' +
+                '<td class="experiment_time"><input type="number"  step="0.5" min="0" value="' + function(){
+                    if (previous_solution.table[i].S != null){
+                        return previous_solution.table[i].S;
+                    } else return ""
+                }() + '"/></td></tr>';
             $('.user_table_body').append(new_row);
         }
     }
@@ -575,7 +568,7 @@ function init_lab() {
             $(".control_duration_value").attr("value", experiment_time);
             put_seconds(experiment_time);
             draw_pendulum(pendulum_radius * length_coefficient);
-            if ($("#previousSolution") !== null && $("#previousSolution").length > 0 && parse_variant(      $("#previousSolution").val())) {
+            if ($("#previousSolution") !== null && $("#previousSolution").length > 0 && parse_variant($("#previousSolution").val())) {
                 var previous_solution = parse_variant($("#previousSolution").val());
                 draw_previous_solution(previous_solution);
             }
@@ -643,12 +636,6 @@ function init_lab() {
                     stop_animation();
                 }
             });
-            $(".block_user_table table").on("focus", "input", function () {
-                check_user_values($(this));
-            });
-            $(".block_user_results input").on("focus", function(){
-                check_user_values($(this));
-            });
         },
         calculateHandler: function () {
             lab_animation_data = parse_calculate_results(arguments[0], default_animation_data);
@@ -666,14 +653,14 @@ function init_lab() {
                 "i": parseFloat($("#results_gyration_radius").val()),
                 "v": parseFloat($("#results_friction_coefficient").val())
             };
-            for (var i = 1; i < (table_experiments_rows + 1); i++) {
+            for (var i = 1; i < ($(".user_table_body").children().length + 1); i++){
                 answer.table.push({
-                    "r": parseFloat($(".row_" + i + " td:nth-child(2) input").val()),
-                    "t1": parseFloat($(".row_" + i + " td:nth-child(3) input").val()),
-                    "phi1": parseFloat($(".row_" + i + " td:nth-child(4) input").val()),
-                    "t2": parseFloat($(".row_" + i + " td:nth-child(5) input").val()),
-                    "phi2": parseFloat($(".row_" + i + " td:nth-child(6) input").val()),
-                    "S": parseFloat($(".row_" + i + " td:nth-child(7) input").val())
+                    "r": parseFloat($(".user_table_body tr:nth-child(" + i + ") td:nth-child(2) input").val()),
+                    "t1": parseFloat($(".user_table_body tr:nth-child(" + i + ") td:nth-child(3) input").val()),
+                    "phi1": parseFloat($(".user_table_body tr:nth-child(" + i + ") td:nth-child(4) input").val()),
+                    "t2": parseFloat($(".user_table_body tr:nth-child(" + i + ") td:nth-child(5) input").val()),
+                    "phi2": parseFloat($(".user_table_body tr:nth-child(" + i + ") td:nth-child(6) input").val()),
+                    "S": parseFloat($(".user_table_body tr:nth-child(" + i + ") td:nth-child(7) input").val())
                 })
             }
             return JSON.stringify(answer);
