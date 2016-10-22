@@ -11,6 +11,7 @@ function init_lab() {
             [7.00, 2.9, 1],
             [8.00, 3.2, 1]
         ],
+        help_slide_number = 0,
         lab_animation_data = [],
         THREAD_LENGTH = 140,
         CARGO_HEIGHT = 30,
@@ -71,7 +72,64 @@ function init_lab() {
             '</tbody></table></div>' +
             '<div class="graphic_angle graphic"><svg width="600" height="220"></svg></div>' +
             '<div class="graphic_speed graphic"><svg width="600" height="220"></svg></div>' +
-            '</div><div class="block_help">Справка</div></div>';
+            '</div><div class="block_help">' +
+            '<h1>Помощь по работе в виртуальной лаборатории</h1>' +
+            '<p>Уважаемый слушатель массового открытого онлайн-курса «Модели и методы аналитической механики»!</p>' +
+            '<p>Вы находитесь в виртуальной лаборатории, где Вашему вниманию предлагается электронная модель физического маятника. Целью выполнения работы является' +
+            ' экспериментальное определение радиуса инерции маятника и коэффициента вязкого трения подшипника.</p>' +
+            '<h2>Интерфейс виртуального эксперимента</h2>' +
+            '<div class="help_slide slide_0"><span>1</span>' +
+            '<img class="arrow_green_1" src="img/Lab_damped_oscillations_arrow_green.png" width="35" height="50"/>' +
+            '<img class="arrow_green_2" src="img/Lab_damped_oscillations_arrow_green.png" width="35" height="50"/>' +
+            '<img class="arrow_red_1" src="img/Lab_damped_oscillations_arrow_red.png" width="35" height="50"/>' +
+            '<img src="img/Lab_damped_oscillations_help_1.png" width="370" height="349"/><p>Перед Вами модель ' +
+            'физического маятника. Для проведения эксперимента Вы можете увеличить или уменьшить радиус <i>r</i> и продолжительность <i>S</i> с помощью соответствующих движков. ' +
+            'Изменения отобразятся на модели маятника. ' +
+            'После выбора подходящих значений осуществите эксперимент, нажав на кнопку «Запустить».' +
+            '</p></div>' +
+            '<div class="help_slide slide_1"><span>2</span><img src="img/Lab_damped_oscillations_help_2.png" width="370" height="349"/><p>' +
+            'При запуске эксперимента изменения параметров будут недоступны. Дождитесь окончания запуска для продолжения работы.' +
+            '</p></div>' +
+            '<div class="help_slide slide_2"><span>3</span>' +
+            '<img class="arrow_green_1" src="img/Lab_damped_oscillations_arrow_green.png" width="35" height="50"/>' +
+            '<img class="arrow_red_1" src="img/Lab_damped_oscillations_arrow_red.png" width="35" height="50"/>' +
+            '<img src="img/Lab_damped_oscillations_help_3.png" width="370" height="349"/><p>' +
+            'Чтобы закончить эксперимент заранее, нажмите кнопку «Стоп». Для просмотра результатов необходимо нажать на экран на установке.' +
+            '</p></div>' +
+            '<div class="help_slide slide_3"><span>4</span>' +
+            '<img class="arrow_green_1" src="img/Lab_damped_oscillations_arrow_green.png" width="35" height="50"/>' +
+            '<img class="arrow_green_2" src="img/Lab_damped_oscillations_arrow_green.png" width="35" height="50"/>' +
+            '<img class="arrow_green_3" src="img/Lab_damped_oscillations_arrow_green.png" width="35" height="50"/>' +
+            '<img class="arrow_green_4" src="img/Lab_damped_oscillations_arrow_green.png" width="35" height="50"/>' +
+            '<img src="img/Lab_damped_oscillations_help_4.png" width="370" height="349"/><p>' +
+            'Чтобы посмотреть графики зависимостей угла отклонения и угловой скорости от времени, нажмите соответствующие кнопки. ' +
+            'Точные значения следует смотреть в таблице результатов. Для перехода к ней или возвращения к установке также нажмите кнопки.' +
+            '</p></div>' +
+            '<div class="help_slide slide_4"><span>5</span><img src="img/Lab_damped_oscillations_help_5.png" width="370" height="349"/><p>' +
+            'Обратите внимение, на графике зависимости угла отклонения от времени должен поместиться хотя бы один полупериод, если этого не произошло, увеличьте продолжительность' +
+            ' проведения эксперимента <i>S</i> и запустите его заново.' +
+            '</p></div>' +
+            '<div class="help_slide slide_5"><span>6</span>' +
+            '<img class="arrow_green_1" src="img/Lab_damped_oscillations_arrow_green.png" width="35" height="50"/>' +
+            '<img src="img/Lab_damped_oscillations_help_6.png" width="370" height="349"/><p>' +
+            'Следующим шагом выполнения работы является заполнение строки таблицы экспериментов. Заносите значения в ячейки таблицы. Выберите на графике точки, являющиеся экстремумами, ' +
+            'посмотрите в таблице результатов их точные значения. В столбец «<i>S</i>» вводится число периодов. Обратите внимание, что значение должно быть кратно 0.5.' +
+            '</p></div>' +
+            '<div class="help_slide slide_6"><span>7</span>' +
+            '<img class="arrow_green_1" src="img/Lab_damped_oscillations_arrow_green.png" width="35" height="50"/>' +
+            '<img class="arrow_green_2" src="img/Lab_damped_oscillations_arrow_green.png" width="35" height="50"/>' +
+            '<img class="arrow_red_1" src="img/Lab_damped_oscillations_arrow_red.png" width="35" height="50"/>' +
+            '<img class="arrow_red_2" src="img/Lab_damped_oscillations_arrow_red.png" width="35" height="50"/>' +
+            '<img src="img/Lab_damped_oscillations_help_7.png" width="370" height="349"/><p>' +
+            'Для нахождения радиуса инерции <i>i</i> и коэффициента вязкого трения &#957; необходимо провести как минимум два ' +
+            'эксперимента, по результатам которых заполнить строки таблицы. Повторите эксперимент, поменяв значения радиуса <i>r</i> и продолжительности <i>S</i>. ' +
+            'Добавьте новую строку в таблицу экспериментов, нажав на кнопку со знаком «+». Удалить лишние строки можно с помощью кнопки со знаком «-». ' +
+            'После заполнения всей таблицы необходимо найти значения радиуса инерции <i>i</i> и коэффициента вязкого трения подшипника &#957; и внести их в соответствующие поля. ' +
+            '</p><p>Теперь Вы знакомы с интерфейсом виртуальной лаборатории и можете начать ее прохождение. Пора приступать!' +
+            '</p></div>' +
+            '<input class="btn not_active slide_back" type="button" value="Назад" />' +
+            '<input class="btn slide_next" type="button" value="Далее" />' +
+            '</div></div>';
 
     function freeze_control_block() {
         controls_blocked = true;
@@ -636,6 +694,28 @@ function init_lab() {
                     stop_animation();
                 }
             });
+            $(".slide_next").click(function () {
+                if (help_slide_number < 6) {
+                    help_slide_number ++;
+                    $(".slide_back").removeClass("not_active");
+                    $(".help_slide").css("display", "none");
+                    $(".help_slide.slide_" + help_slide_number).css("display", "block");
+                    if (help_slide_number === 6) {
+                        $(this).addClass("not_active")
+                    }
+                }
+            });
+            $(".slide_back").click(function () {
+                if (help_slide_number > 0) {
+                    help_slide_number --;
+                    $(".slide_next").removeClass("not_active");
+                    $(".help_slide").css("display", "none");
+                    $(".help_slide.slide_" + help_slide_number).css("display", "block");
+                    if (help_slide_number === 0) {
+                        $(this).addClass("not_active")
+                    }
+                }
+            })
         },
         calculateHandler: function () {
             lab_animation_data = parse_calculate_results(arguments[0], default_animation_data);
